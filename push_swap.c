@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:27:48 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/09 18:01:03 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:25:19 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	fill_stack_a(char **argv, t_node **stack_a)
 	}
 }
 
-void sa(t_node **stack_a, int to_print)
+void	sa(t_node **stack_a, int to_print)
 {
 	t_node	*head;
 	int		temp;
@@ -173,7 +173,7 @@ void sa(t_node **stack_a, int to_print)
 		write(1, "sa\n", 3);
 }
 
-void sb(t_node **stack_b, int to_print)
+void	sb(t_node **stack_b, int to_print)
 {
 	t_node	*head;
 	int		temp;
@@ -231,7 +231,7 @@ void	pb(t_node **stack_a, t_node **stack_b)
 	write(1, "pb\n", 3);
 }
 
-int stack_length(t_node *stack)
+int	stack_length(t_node *stack)
 {
 	int count;
 	t_node *tmp;
@@ -267,7 +267,7 @@ void	stack_to_array(t_node *stack, int *arr)
 	}
 }
 
-void print_stacks(t_node *stack_a, t_node *stack_b)
+void	print_stacks(t_node *stack_a, t_node *stack_b)
 {
 	t_node *tmp_a;
 	t_node *tmp_b;
