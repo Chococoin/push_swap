@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:34:19 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/15 17:18:22 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:30:16 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,36 +60,4 @@ void	free_stack(t_node *stack)
 		stack = stack->next;
 		free(tmp);
 	}
-}
-
-void	print_stacks(t_node *stack_a, t_node *stack_b)
-{
-	t_node	*tmp_a;
-	t_node	*tmp_b;
-
-	tmp_a = stack_a;
-	tmp_b = stack_b;
-	while (tmp_a && tmp_a->prev)
-		tmp_a = tmp_a->prev;
-	while (tmp_b && tmp_b->prev)
-		tmp_b = tmp_b->prev;
-	write(1, "STACK_A STACK_B\n", 16);
-	while (tmp_a || tmp_b)
-	{
-		if (tmp_a)
-		{
-			printf("%d ", tmp_a->value);
-			tmp_a = tmp_a->next;
-		}
-		else
-			printf("  ");
-		printf("   ");
-		if (tmp_b)
-		{
-			printf("%d", tmp_b->value);
-			tmp_b = tmp_b->next;
-		}
-		printf("\n");
-	}
-	printf("--------\n");
 }

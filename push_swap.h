@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:33:47 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/15 17:01:24 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:29:35 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,19 @@ void	rrb(t_node **stack_b, int to_print, int *move_count);
 void	rrr(t_node **stack_a, t_node **stack_b, int *move_count);
 int		*compress_values(t_node *stack, int size);
 int		get_max_bits(t_node *stack);
+int		find_pivot(t_node *stack, int len);
 void	radix_sort(t_node **stack_a, t_node **stack_b, int *move_count);
+void	quicksort_a(t_node **stack_a, t_node **stack_b, int len, int *move_count);
+void	quicksort_b(t_node **stack_a, t_node **stack_b, int len, int *move_count);
 void	restore_values(t_node *stack, int *sorted_arr);
 void	push_swap(t_node **stack_a, t_node **stack_b, int *move_count);
+void	sort_two(t_node **stack_a, int *move_count);
+void	sort_five(t_node **stack_a, t_node **stack_b, int *move_count);
+void	sort_three(t_node **stack_a, int *move_count);
+int		get_max_value(t_node *stack);
+int		get_index_of_value(t_node *stack, int value);
+void	chunks_push(t_node **stack_a, t_node **stack_b, int *move_count, int size, int number_of_chunks);
+void	chunks_reassemble(t_node **stack_a, t_node **stack_b, int *move_count);
+void	chunks_sort(t_node **stack_a, t_node **stack_b, int *move_count);
 
 #endif

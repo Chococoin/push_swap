@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:27:48 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/15 16:58:56 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:29:08 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 void	push_swap(t_node **stack_a, t_node **stack_b, int *move_count)
 {
-	int	*sorted_arr;
-	int	size;
+	int size;
 
 	size = stack_length(*stack_a);
 	if (size <= 1)
 		return;
-	sorted_arr = compress_values(*stack_a, size);
-	if (!sorted_arr)
-		print_error();
-	radix_sort(stack_a, stack_b, move_count);
-	restore_values(*stack_a, sorted_arr);
-	free(sorted_arr);
+	if (size == 2)
+		sort_two(stack_a, move_count);
+	else if (size == 3)
+		sort_three(stack_a, move_count);
+	else if (size <= 5)
+		sort_five(stack_a, stack_b, move_count);
+	else
+		chunks_sort(stack_a, stack_b, move_count);
 }
 
 int	main(int argc, char **argv)
@@ -41,9 +42,7 @@ int	main(int argc, char **argv)
 		return (0);
 	validate_args(argv);
 	fill_stack_a(argv, &stack_a);
-	print_stacks(stack_a, stack_b);
 	push_swap(&stack_a, &stack_b, &move_count);
-	print_stacks(stack_a, stack_b);
 	printf("Total moves: %d\n", move_count);
 	free_stack(stack_a);
 	free_stack(stack_b);
