@@ -6,100 +6,11 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 12:00:00 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/30 19:03:11 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/30 20:10:22 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	get_position(t_node *stack, int value)
-{
-	int	pos;
-
-	pos = 0;
-	while (stack)
-	{
-		if (stack->value == value)
-			return (pos);
-		pos++;
-		stack = stack->next;
-	}
-	return (-1);
-}
-
-int	get_min_value(t_node *stack)
-{
-	int	min;
-
-	if (!stack)
-		return (0);
-	min = stack->value;
-	while (stack)
-	{
-		if (stack->value < min)
-			min = stack->value;
-		stack = stack->next;
-	}
-	return (min);
-}
-
-int	find_position_in_b(t_node *stack_b, int value)
-{
-	int		pos;
-	int		min;
-	int		max;
-	t_node	*current;
-
-	if (!stack_b)
-		return (0);
-	min = get_min_value(stack_b);
-	max = get_max_value(stack_b);
-	if (value > max || value < min)
-		return (get_position(stack_b, max));
-	pos = 0;
-	current = stack_b;
-	while (current && current->next)
-	{
-		if (value < current->value && value > current->next->value)
-			return (pos + 1);
-		pos++;
-		current = current->next;
-	}
-	return (0);
-}
-
-static void	calc_rot_costs(t_cost *c, int pos, int len)
-{
-	c->ra_cost = 0;
-	c->rra_cost = 0;
-	if (pos <= len / 2)
-		c->ra_cost = pos;
-	else
-		c->rra_cost = len - pos;
-}
-
-static int	get_minimum(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
-static void	adj_common_cost(t_cost *c)
-{
-	int	common;
-
-	if (c->ra_cost > 0 && c->rb_cost > 0)
-	{
-		common = get_minimum(c->ra_cost, c->rb_cost);
-		c->total -= common;
-	}
-	else if (c->rra_cost > 0 && c->rrb_cost > 0)
-	{
-		common = get_minimum(c->rra_cost, c->rrb_cost);
-		c->total -= common;
-	}
-}
 
 t_cost	calc_cost(t_node *a, t_node *b, int val)
 {
@@ -120,58 +31,7 @@ t_cost	calc_cost(t_node *a, t_node *b, int val)
 	return (c);
 }
 
-int	find_cheapest(t_node *a, t_node *b)
-{
-	t_node	*cur;
-	t_cost	min_c;
-	t_cost	cur_c;
-	int		cheap_val;
-
-	cur = a;
-	min_c.total = 2147483647;
-	cheap_val = cur->value;
-	while (cur)
-	{
-		cur_c = calc_cost(a, b, cur->value);
-		if (cur_c.total < min_c.total)
-		{
-			min_c = cur_c;
-			cheap_val = cur->value;
-		}
-		cur = cur->next;
-	}
-	return (cheap_val);
-}
-
-static void	exec_common_rot(t_node **stack_a, t_node **stack_b, t_cost *cost)
-{
-	while (cost->ra_cost > 0 && cost->rb_cost > 0)
-	{
-		rr(stack_a, stack_b);
-		cost->ra_cost--;
-		cost->rb_cost--;
-	}
-	while (cost->rra_cost > 0 && cost->rrb_cost > 0)
-	{
-		rrr(stack_a, stack_b);
-		cost->rra_cost--;
-		cost->rrb_cost--;
-	}
-}
-
-static void	exec_single_rot(t_node **stack_a, t_node **stack_b, t_cost *cost)
-{
-	while (cost->ra_cost-- > 0)
-		ra(stack_a, 1);
-	while (cost->rra_cost-- > 0)
-		rra(stack_a, 1);
-	while (cost->rb_cost-- > 0)
-		rb(stack_b, 1);
-	while (cost->rrb_cost-- > 0)
-		rrb(stack_b, 1);
-}
-
-void	execute_rotations(t_node **stack_a, t_node **stack_b, int value)
+void	exec_rotations(t_node **stack_a, t_node **stack_b, int value)
 {
 	t_cost	cost;
 
@@ -210,7 +70,7 @@ void	turk_sort(t_node **stack_a, t_node **stack_b)
 	while (*stack_a)
 	{
 		cheapest_value = find_cheapest(*stack_a, *stack_b);
-		execute_rotations(stack_a, stack_b, cheapest_value);
+		exec_rotations(stack_a, stack_b, cheapest_value);
 		pb(stack_a, stack_b);
 	}
 	rotate_stack_b_to_max(stack_b);

@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:33:47 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/30 17:40:30 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/30 20:27:57 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,34 @@ void	validate_args(char **argv);
 void	free_stack(t_node *stack);
 void	fill_stack_a(char **argv, t_node **stack_a);
 int		stack_length(t_node *stack);
-void	sa(t_node **stack_a, int to_print, int *move_count);
-void	sb(t_node **stack_b, int to_print, int *move_count);
-void	ss(t_node **stack_a, t_node **stack_b, int *move_count);
-void	pa(t_node **stack_a, t_node **stack_b, int *move_count);
-void	pb(t_node **stack_a, t_node **stack_b, int *move_count);
-void	ra(t_node **stack_a, int to_print, int *move_count);
-void	rb(t_node **stack_b, int to_print, int *move_count);
-void	rr(t_node **stack_a, t_node **stack_b, int *move_count);
-void	rra(t_node **stack_a, int to_print, int *move_count);
-void	rrb(t_node **stack_b, int to_print, int *move_count);
-void	rrr(t_node **stack_a, t_node **stack_b, int *move_count);
-void	push_swap(t_node **stack_a, t_node **stack_b, int *move_count);
-void	sort_two(t_node **stack_a, int *move_count);
-void	sort_five(t_node **stack_a, t_node **stack_b, int *move_count);
-void	sort_three(t_node **stack_a, int *move_count);
+void	sa(t_node **stack_a, int to_print);
+void	sb(t_node **stack_b, int to_print);
+void	ss(t_node **stack_a, t_node **stack_b);
+void	pa(t_node **stack_a, t_node **stack_b);
+void	pb(t_node **stack_a, t_node **stack_b);
+void	ra(t_node **stack_a, int to_print);
+void	rb(t_node **stack_b, int to_print);
+void	rr(t_node **stack_a, t_node **stack_b);
+void	rra(t_node **stack_a, int to_print);
+void	rrb(t_node **stack_b, int to_print);
+void	rrr(t_node **stack_a, t_node **stack_b);
+void	adj_common_cost(t_cost *c);
+void	exec_common_rot(t_node **stack_a, t_node **stack_b, t_cost *cost);
+void	exec_single_rot(t_node **stack_a, t_node **stack_b, t_cost *cost);
+int		get_position(t_node *stack, int value);
+int		find_position_in_b(t_node *stack_b, int value);
+int		get_minimum(int a, int b);
+int		get_min_index(t_node *stack);
+void	push_swap(t_node **stack_a, t_node **stack_b);
+void	sort_two(t_node **stack_a);
+void	sort_five(t_node **stack_a, t_node **stack_b);
+void	sort_three(t_node **stack_a);
 int		get_max_value(t_node *stack);
-t_cost	calculate_cost(t_node *stack_a, t_node *stack_b, int value);
-int		find_cheapest_value(t_node *stack_a, t_node *stack_b);
-void	execute_rotations(t_node **stack_a, t_node **stack_b, int value, int *move_count);
-void	turk_sort(t_node **stack_a, t_node **stack_b, int *move_count);
+t_cost	calc_cost(t_node *stack_a, t_node *stack_b, int value);
+void	calc_rot_costs(t_cost *c, int pos, int len);
+int		find_cheapest(t_node *stack_a, t_node *stack_b);
+void	exec_rotations(t_node **stack_a, t_node **stack_b, int value);
+void	turk_sort(t_node **stack_a, t_node **stack_b);
+void	push_min_to_b(t_node **stack_a, t_node **stack_b);
 
 #endif

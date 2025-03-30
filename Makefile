@@ -1,8 +1,10 @@
-NAME    = push_swap
-CC      = gcc
-CFLAGS  = -Wall -Wextra -Werror -fprofile-arcs -ftest-coverage
-SRCS    = push_swap.c validations.c stack.c operations.c sort.c turk_algorithm.c
-OBJS    = $(SRCS:.c=.o)
+NAME	=	push_swap
+CC		=	gcc
+CFLAGS	=	-Wall -Wextra -Werror -fprofile-arcs -ftest-coverage
+SRCS	=	push_swap.c validations.c stack.c operations.c sort.c \
+			turk_algorithm.c utils_algo_1.c utils_algo_2.c utils_validations.c \
+			operations_1.c operations_2.c operations_3.c
+OBJS	= $(SRCS:.c=.o)
 
 all: $(NAME)
 
