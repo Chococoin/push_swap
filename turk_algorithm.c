@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 12:00:00 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/30 17:44:04 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:03:11 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,148 +68,154 @@ int	find_position_in_b(t_node *stack_b, int value)
 	return (0);
 }
 
-t_cost	calculate_cost(t_node *stack_a, t_node *stack_b, int value)
+static void	calc_rot_costs(t_cost *c, int pos, int len)
 {
-	t_cost	cost;
+	c->ra_cost = 0;
+	c->rra_cost = 0;
+	if (pos <= len / 2)
+		c->ra_cost = pos;
+	else
+		c->rra_cost = len - pos;
+}
+
+static int	get_minimum(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+static void	adj_common_cost(t_cost *c)
+{
+	int	common;
+
+	if (c->ra_cost > 0 && c->rb_cost > 0)
+	{
+		common = get_minimum(c->ra_cost, c->rb_cost);
+		c->total -= common;
+	}
+	else if (c->rra_cost > 0 && c->rrb_cost > 0)
+	{
+		common = get_minimum(c->rra_cost, c->rrb_cost);
+		c->total -= common;
+	}
+}
+
+t_cost	calc_cost(t_node *a, t_node *b, int val)
+{
+	t_cost	c;
 	int		pos_a;
 	int		pos_b;
 	int		len_a;
 	int		len_b;
 
-	len_a = stack_length(stack_a);
-	len_b = stack_length(stack_b);
-	pos_a = get_position(stack_a, value);
-	pos_b = find_position_in_b(stack_b, value);
-	if (pos_a <= len_a / 2)
-		cost.ra_cost = pos_a;
-	else
-		cost.ra_cost = 0;
-	if (pos_a > len_a / 2)
-		cost.rra_cost = len_a - pos_a;
-	else
-		cost.rra_cost = 0;
-	if (pos_b <= len_b / 2)
-		cost.rb_cost = pos_b;
-	else
-		cost.rb_cost = 0;
-	if (pos_b > len_b / 2)
-		cost.rrb_cost = len_b - pos_b;
-	else
-		cost.rrb_cost = 0;
-	cost.total = cost.ra_cost + cost.rra_cost + cost.rb_cost + cost.rrb_cost;
-	if (cost.ra_cost > 0 && cost.rb_cost > 0)
-	{
-		int common = (cost.ra_cost < cost.rb_cost) ? cost.ra_cost : cost.rb_cost;
-		cost.total -= common;
-	}
-	else if (cost.rra_cost > 0 && cost.rrb_cost > 0)
-	{
-		int common = (cost.rra_cost < cost.rrb_cost) ? cost.rra_cost : cost.rrb_cost;
-		cost.total -= common;
-	}
-	return (cost);
+	len_a = stack_length(a);
+	len_b = stack_length(b);
+	pos_a = get_position(a, val);
+	pos_b = find_position_in_b(b, val);
+	calc_rot_costs(&c, pos_a, len_a);
+	calc_rot_costs(&c, pos_b, len_b);
+	c.total = c.ra_cost + c.rra_cost + c.rb_cost + c.rrb_cost;
+	adj_common_cost(&c);
+	return (c);
 }
 
-int	find_cheapest_value(t_node *stack_a, t_node *stack_b)
+int	find_cheapest(t_node *a, t_node *b)
 {
-	t_node	*current;
-	t_cost	min_cost;
-	t_cost	current_cost;
-	int		cheapest_value;
+	t_node	*cur;
+	t_cost	min_c;
+	t_cost	cur_c;
+	int		cheap_val;
 
-	current = stack_a;
-	min_cost.total = 2147483647;
-	cheapest_value = current->value;
-
-	while (current)
+	cur = a;
+	min_c.total = 2147483647;
+	cheap_val = cur->value;
+	while (cur)
 	{
-		current_cost = calculate_cost(stack_a, stack_b, current->value);
-		if (current_cost.total < min_cost.total)
+		cur_c = calc_cost(a, b, cur->value);
+		if (cur_c.total < min_c.total)
 		{
-			min_cost = current_cost;
-			cheapest_value = current->value;
+			min_c = cur_c;
+			cheap_val = cur->value;
 		}
-		current = current->next;
+		cur = cur->next;
 	}
-
-	return (cheapest_value);
+	return (cheap_val);
 }
 
-void	execute_rotations(t_node **stack_a, t_node **stack_b, int value, int *move_count)
+static void	exec_common_rot(t_node **stack_a, t_node **stack_b, t_cost *cost)
+{
+	while (cost->ra_cost > 0 && cost->rb_cost > 0)
+	{
+		rr(stack_a, stack_b);
+		cost->ra_cost--;
+		cost->rb_cost--;
+	}
+	while (cost->rra_cost > 0 && cost->rrb_cost > 0)
+	{
+		rrr(stack_a, stack_b);
+		cost->rra_cost--;
+		cost->rrb_cost--;
+	}
+}
+
+static void	exec_single_rot(t_node **stack_a, t_node **stack_b, t_cost *cost)
+{
+	while (cost->ra_cost-- > 0)
+		ra(stack_a, 1);
+	while (cost->rra_cost-- > 0)
+		rra(stack_a, 1);
+	while (cost->rb_cost-- > 0)
+		rb(stack_b, 1);
+	while (cost->rrb_cost-- > 0)
+		rrb(stack_b, 1);
+}
+
+void	execute_rotations(t_node **stack_a, t_node **stack_b, int value)
 {
 	t_cost	cost;
-	int		pos_a;
-	int		pos_b;
-	int		len_a;
-	int		len_b;
 
-	len_a = stack_length(*stack_a);
-	len_b = stack_length(*stack_b);
-	pos_a = get_position(*stack_a, value);
-	pos_b = find_position_in_b(*stack_b, value);
-
-	if (pos_a <= len_a / 2)
-		cost.ra_cost = pos_a;
-	else
-		cost.ra_cost = 0;
-	if (pos_a > len_a / 2)
-		cost.rra_cost = len_a - pos_a;
-	else
-		cost.rra_cost = 0;
-	if (pos_b <= len_b / 2)
-		cost.rb_cost = pos_b;
-	else
-		cost.rb_cost = 0;
-	if (pos_b > len_b / 2)
-		cost.rrb_cost = len_b - pos_b;
-	else
-		cost.rrb_cost = 0;
-	while (cost.ra_cost > 0 && cost.rb_cost > 0)
-	{
-		rr(stack_a, stack_b, move_count);
-		cost.ra_cost--;
-		cost.rb_cost--;
-	}
-	while (cost.rra_cost > 0 && cost.rrb_cost > 0)
-	{
-		rrr(stack_a, stack_b, move_count);
-		cost.rra_cost--;
-		cost.rrb_cost--;
-	}
-	while (cost.ra_cost-- > 0)
-		ra(stack_a, 1, move_count);
-	while (cost.rra_cost-- > 0)
-		rra(stack_a, 1, move_count);
-	while (cost.rb_cost-- > 0)
-		rb(stack_b, 1, move_count);
-	while (cost.rrb_cost-- > 0)
-		rrb(stack_b, 1, move_count);
+	cost = calc_cost(*stack_a, *stack_b, value);
+	exec_common_rot(stack_a, stack_b, &cost);
+	exec_single_rot(stack_a, stack_b, &cost);
 }
 
-void	turk_sort(t_node **stack_a, t_node **stack_b, int *move_count)
+static void	rotate_stack_b_to_max(t_node **stack_b)
+{
+	int	max_pos;
+	int	len_b;
+	int	max_value;
+
+	max_value = get_max_value(*stack_b);
+	max_pos = get_position(*stack_b, max_value);
+	len_b = stack_length(*stack_b);
+	if (max_pos <= len_b / 2)
+	{
+		while ((*stack_b)->value != max_value)
+			rb(stack_b, 1);
+	}
+	else
+	{
+		while ((*stack_b)->value != max_value)
+			rrb(stack_b, 1);
+	}
+}
+
+void	turk_sort(t_node **stack_a, t_node **stack_b)
 {
 	int	cheapest_value;
 
-	pb(stack_a, stack_b, move_count);
-	pb(stack_a, stack_b, move_count);
+	pb(stack_a, stack_b);
+	pb(stack_a, stack_b);
 	while (*stack_a)
 	{
-		cheapest_value = find_cheapest_value(*stack_a, *stack_b);
-		execute_rotations(stack_a, stack_b, cheapest_value, move_count);
-		pb(stack_a, stack_b, move_count);
+		cheapest_value = find_cheapest(*stack_a, *stack_b);
+		execute_rotations(stack_a, stack_b, cheapest_value);
+		pb(stack_a, stack_b);
 	}
-	int	max_pos = get_position(*stack_b, get_max_value(*stack_b));
-	int	len_b = stack_length(*stack_b);
-	if (max_pos <= len_b / 2)
-	{
-		while ((*stack_b)->value != get_max_value(*stack_b))
-			rb(stack_b, 1, move_count);
-	}
-	else
-	{
-		while ((*stack_b)->value != get_max_value(*stack_b))
-			rrb(stack_b, 1, move_count);
-	}
+	rotate_stack_b_to_max(stack_b);
 	while (*stack_b)
-		pa(stack_a, stack_b, move_count);
+	{
+		pa(stack_a, stack_b);
+	}
 }
