@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:33:47 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/30 20:27:57 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/31 01:41:11 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ typedef struct s_node
 	struct s_node	*prev;
 	struct s_node	*next;
 }	t_node;
+
+typedef struct s_positions
+{
+	int	pos_a;
+	int	pos_b;
+	int	len_a;
+	int	len_b;
+}	t_positions;
 
 typedef struct s_cost
 {
@@ -54,12 +62,8 @@ void	rr(t_node **stack_a, t_node **stack_b);
 void	rra(t_node **stack_a, int to_print);
 void	rrb(t_node **stack_b, int to_print);
 void	rrr(t_node **stack_a, t_node **stack_b);
-void	adj_common_cost(t_cost *c);
-void	exec_common_rot(t_node **stack_a, t_node **stack_b, t_cost *cost);
-void	exec_single_rot(t_node **stack_a, t_node **stack_b, t_cost *cost);
 int		get_position(t_node *stack, int value);
 int		find_position_in_b(t_node *stack_b, int value);
-int		get_minimum(int a, int b);
 int		get_min_index(t_node *stack);
 void	push_swap(t_node **stack_a, t_node **stack_b);
 void	sort_two(t_node **stack_a);
@@ -67,10 +71,17 @@ void	sort_five(t_node **stack_a, t_node **stack_b);
 void	sort_three(t_node **stack_a);
 int		get_max_value(t_node *stack);
 t_cost	calc_cost(t_node *stack_a, t_node *stack_b, int value);
-void	calc_rot_costs(t_cost *c, int pos, int len);
+void	calculate_costs(t_cost *cost, t_positions *positions);
+void	calculate_rb_rrb(t_cost *cost, int pos_b, int len_b);
+void	calculate_ra_rra(t_cost *cost, int pos_a, int len_a);
+void	calculate_common_cost(t_cost *cost);
 int		find_cheapest(t_node *stack_a, t_node *stack_b);
-void	exec_rotations(t_node **stack_a, t_node **stack_b, int value);
+void	execute_rotations(t_node **stack_a, t_node **stack_b, int value);
+void	perform_rotations_rr(t_node **stack_a, t_node **stack_b, t_cost *cost);
+void	perform_rotations(t_node **stack_a, t_node **stack_b, t_cost *cost);
+void	perform_rot_single(t_node **stack_a, t_node **stack_b, t_cost *cost);
 void	turk_sort(t_node **stack_a, t_node **stack_b);
 void	push_min_to_b(t_node **stack_a, t_node **stack_b);
+void	align_stack_b(t_node **stack_b);
 
 #endif
