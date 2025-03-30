@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:27:48 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/16 23:29:08 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:39:20 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	push_swap(t_node **stack_a, t_node **stack_b, int *move_count)
 	else if (size <= 5)
 		sort_five(stack_a, stack_b, move_count);
 	else
-		chunks_sort(stack_a, stack_b, move_count);
+		turk_sort(stack_a, stack_b, move_count);;
 }
 
 int	main(int argc, char **argv)
