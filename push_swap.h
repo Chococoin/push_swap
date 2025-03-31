@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:33:47 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/31 01:41:11 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:54:35 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	sort_two(t_node **stack_a);
 void	sort_five(t_node **stack_a, t_node **stack_b);
 void	sort_three(t_node **stack_a);
 int		get_max_value(t_node *stack);
+int		get_min_value(t_node *stack);
 t_cost	calc_cost(t_node *stack_a, t_node *stack_b, int value);
 void	calculate_costs(t_cost *cost, t_positions *positions);
 void	calculate_rb_rrb(t_cost *cost, int pos_b, int len_b);
