@@ -9,13 +9,13 @@ OBJS	= $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -ftest-coverage
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 %.o: %.c push_swap.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) *.gcno *.gcda *.gcov
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
