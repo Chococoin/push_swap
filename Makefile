@@ -1,9 +1,10 @@
 NAME	=	push_swap
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
-SRCS	=	push_swap.c validations.c stack.c sort.c turk_algorithm.c \
-			utils_1.c utils_2.c utils_3.c utils_validations.c \
-			operations_1.c operations_2.c operations_3.c
+CFLAGS	=	-Wall -Wextra -Werror -g
+SRCS	=	push_swap.c validations.c sort_utils.c turk_algorithm.c \
+			min_cost_utils.c positions.c costs.c validation_utils.c \
+			operations_1.c operations_2.c operations_3.c rotations.c \
+			stack_utils.c 
 OBJS	= $(SRCS:.c=.o)
 
 all: $(NAME)
