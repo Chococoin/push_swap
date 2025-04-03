@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:33:47 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/31 13:54:35 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:07:29 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <limits.h>
 
 typedef struct s_node
 {
@@ -44,9 +45,6 @@ typedef struct s_cost
 void	print_error(void);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_atoi(char *s);
-int		no_alpha_validator(char *s);
-void	validate_no_dupl(char **argv);
-void	validate_no_char(char **argv);
 void	validate_args(char **argv);
 void	free_stack(t_node *stack);
 void	fill_stack_a(char **argv, t_node **stack_a);
