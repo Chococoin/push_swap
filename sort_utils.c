@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 22:43:23 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/31 13:08:29 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/04/03 20:16:26 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,18 @@ void	push_min_to_b(t_node **stack_a, t_node **stack_b)
 
 	min_index = get_min_index(*stack_a);
 	len = stack_length(*stack_a);
-	if (min_index == 0)
-		pb(stack_a, stack_b);
-	else if (min_index <= len / 2)
+	if (min_index <= len / 2)
 	{
 		while (min_index-- > 0)
 			ra(stack_a, 1);
-		pb(stack_a, stack_b);
 	}
 	else
 	{
 		moves = len - min_index;
 		while (moves-- > 0)
 			rra(stack_a, 1);
-		pb(stack_a, stack_b);
 	}
+	pb(stack_a, stack_b);
 }
 
 void	fill_stack_a(char **argv, t_node **stack_a)
