@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:34:33 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/04/03 11:05:46 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:27:57 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	check_number_limits(const char *str)
 		if (str[j] < '0' || str[j] > '9')
 			print_error();
 		n = n * 10 + (str[j] - '0');
-		if ((sign == 1 && n > INT_MAX) || (sign == -1 && -n < INT_MIN))
+		if ((sign == 1 && n > INT_MAX) || (sign == -1 && (-n) < INT_MIN))
 			print_error();
 		j++;
 	}
