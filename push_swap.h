@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:33:47 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/04/03 11:07:29 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:52:06 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_cost
 }	t_cost;
 
 void	print_error(void);
+void	print_void(void);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_atoi(char *s);
 void	validate_args(char **argv);

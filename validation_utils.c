@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 20:23:53 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/03/31 13:59:55 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:53:29 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	print_error(void)
 {
 	write(2, "Error\n", 6);
 	exit(1);
+}
+
+void	print_void(void)
+{
+	exit(0);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
