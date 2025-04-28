@@ -6,7 +6,7 @@
 /*   By: glugo-mu <glugo-mu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:34:33 by glugo-mu          #+#    #+#             */
-/*   Updated: 2025/04/17 15:27:57 by glugo-mu         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:19:28 by glugo-mu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,32 @@ static void	validate_no_dupl(char **argv)
 	}
 }
 
+static void validate_disorder(char **argv)
+{
+	int	i;
+	int len;
+
+	len = 0;
+	i = 1;
+	while (argv[i + 1])
+	{
+		len++;
+		i++;
+	}
+	i = 1;
+	while (argv[i + 1])
+	{
+		if (ft_atoi(argv[i]) < ft_atoi(argv[i + 1]))
+			len--;
+		i++;
+	}
+	if (len == 0)
+		print_void();
+}
+
 void	validate_args(char **argv)
 {
+	validate_disorder(argv);
 	validate_range(argv);
 	validate_no_dupl(argv);
 }
